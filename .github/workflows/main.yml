@@ -36,3 +36,7 @@ jobs:
       with:
         branch_name: ${{env.branch_name}}
         token: ${{ secrets.GH_TOKEN }}
+        openai_key: "openai_key"
+        program_folder_base_path: "./program"
+        test_folder_base_path: "./tests"
+        assistant_id: "assistant_id"
