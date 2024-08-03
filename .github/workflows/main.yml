@@ -31,7 +31,17 @@ jobs:
         echo "branch_name=${{ github.head_ref }}" >> $GITHUB_ENV
       if: ${{ github.event_name == 'pull_request' && github.base_ref == 'main' }}
 
+    - name: Skip Create Branch if name contains '-ai-recommender'
+      id: skip_create_branch
+      run: |
+        if [[ "${{ env.branch_name }}" == *"-ai-recommender"* ]]; then
+          echo "Skipping Create Branch step"
+          exit 1
+        fi
+      continue-on-error: true
+
     - name: Create Branch
+      if: steps.skip_create_branch.outcome == 'success'
       uses: daffahilmyf/create-branch-action@main
       with:
         branch_name: ${{env.branch_name}}
